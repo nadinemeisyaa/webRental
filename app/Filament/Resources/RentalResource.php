@@ -107,6 +107,7 @@ class RentalResource extends Resource
                 TextColumn::make('payment_date')
                     ->date(),
                 TextColumn::make('status')
+                    ->default('pending')
                     ->badge()
                     ->color(fn(string $state): string => match ($state) {
                         'approved' => 'success',

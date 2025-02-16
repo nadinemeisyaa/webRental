@@ -15,7 +15,7 @@
                         </p>
                         <div class="mt-5 sm:mt-8 flex justify-center">
                             <div class="rounded-md shadow">
-                                <a href="#"
+                                <a href="{{ route('sewa') }}"
                                     class="w-full flex items-center justify-center px-6 py-2 sm:px-8 sm:py-3 border border-transparent text-sm sm:text-base font-medium rounded-md text-white bg-green-500 hover:bg-green-600 transition-colors duration-300">
                                     Start Rental
                                 </a>

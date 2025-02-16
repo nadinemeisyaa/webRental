@@ -11,7 +11,7 @@ use Livewire\Component;
 
 class FormRental extends Component
 {
-    public $item = null;
+    public $item;
     public $start_rent;
     public $end_rent;
     public $amount;
@@ -34,7 +34,7 @@ class FormRental extends Component
             'amount' => $amount,
         ]);
 
-        $phoneNumber = '081944582397';
+        $phoneNumber = '6281944582397';
         $message = "Halo, saya ingin mengkonfirmasi penyewaan multimedia dengan detail berikut:\n\n"
         . "Nama: " . $user->name . "\n"
         . "Item: " . $rental->item->name . "\n"
@@ -42,6 +42,7 @@ class FormRental extends Component
         . "Selesai: " . $endRent->format('d M Y H:i') . "\n"
         . "Total Hari: " . $totalDays . "\n"
         . "Total Biaya: Rp " . number_format($amount, 0, ',', '.') . "\n";
+        $message = "Deskripsi denda: Jika terlambat mengembalikan barang maximal 4jam dari waktu peminjaman ,maka akan dikenakan denda seniai harga sewa /hari barang tersebut ";
 
         $whatsAppApi = "https://wa.me/".$phoneNumber."?text=".urlencode($message);
 
