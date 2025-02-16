@@ -4,9 +4,12 @@ use App\Livewire\FormRental;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\UserTransactionHistory;
 
-Route::view('profile', 'livewire.update-profile-information-form')
-    ->middleware(['auth'])
-    ->name('profile');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', function () {
+        return view('profile.show');
+    })->name('profile');
+});
+
 
 require __DIR__ . '/auth.php';
 
