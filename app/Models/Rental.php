@@ -26,4 +26,9 @@ class Rental extends Model
     public function items(){
         return $this->belongsTo(Item::class, 'item_id');
     }
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }
 }

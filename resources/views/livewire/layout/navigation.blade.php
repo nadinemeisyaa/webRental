@@ -44,8 +44,11 @@ new class extends Component
                 <x-nav-link :href="route('about')" :active="request()->routeIs('about')" wire:navigate>
                     {{ __('About') }}
                 </x-nav-link>
-            </div>
 
+                <x-nav-link :href="route('transaction.history')" :active="request()->routeIs('transaction.history')">
+                    {{ __('History Transaksi') }}
+                </x-nav-link>
+            </div>
             <!-- Settings Dropdown -->
             @guest
              <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-4">

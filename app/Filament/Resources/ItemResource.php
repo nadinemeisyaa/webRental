@@ -59,6 +59,7 @@ class ItemResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
+                ->searchable()
                 ->sortable(),
                 TextColumn::make('description'),
                 TextColumn::make('status')

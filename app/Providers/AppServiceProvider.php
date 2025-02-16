@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Http\Livewire\UserTransactionHistory;
+use Livewire\Livewire;
 
 class AppServiceProvider extends ServiceProvider
 {

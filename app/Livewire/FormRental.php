@@ -33,34 +33,15 @@ class FormRental extends Component
             'amount' => $amount,
         ]);
 
-        // $response = Http::withHeaders([
-        //     'Authorization' => 'Bearer ' . env('FONNTE_TOKEN')
-        // ])->post('https://api.fonnte.com/send', [
-        //             'target' => $user->phone_number,
-        //             'message' => 'Pembayaran sewa barang berhasil dilakukan',
-        //             'countryCode' => '62',
-        //         ]);
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . env('FONNTE_TOKEN')
+        ])->post('https://api.fonnte.com/send', [
+                    'target' => $user->phone_number,
+                    'message' => 'Pembayaran sewa barang berhasil dilakukan',
+                    'countryCode' => '62',
+                ]);
 
-        // return redirect()->route('home');
-
-         // Buat pesan WhatsApp
-        $message = "Halo, saya ingin melakukan rental mobil dengan detail berikut:\n\n";
-        $message .= "Nama: {$this->user_id}\n";
-        $message .= "Item: {$this->name}\n";
-        $message .= "Harga per Hari: Rp {$this->price_per_day}\n";
-        $message .= "Denda: Rp {$this->price_per_day}\n\n";
-        $message .= "Mohon konfirmasi ketersediaan item. Terima kasih.";
-
-        // Nomor WhatsApp admin
-        $phoneNumber = '6282137812972'; 
-
-        // Redirect ke WhatsApp
-        $whatsappUrl = "https://api.whatsapp.com/send?phone={$phoneNumber}&text=" . urlencode($message);
-        
-        // Emit event untuk JavaScript
-        $this->emit('redirectToWhatsApp', $whatsappUrl);
-        
-        session()->flash('message', 'Rental berhasil disubmit!');
+        return redirect()->route('home');
     }
 
     public function mount()
@@ -91,7 +72,7 @@ class FormRental extends Component
         }
     }
 
-    
+
 
     public function updatedItem()
     {

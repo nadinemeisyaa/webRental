@@ -32,40 +32,41 @@ class RentalResource extends Resource
     {
         return $form
             ->schema([
-                    Select::make('user_id')
-                            ->option(User::pluck('name', 'id'))
-                            // ->relationship ('user','name',fn (Builder $query) => $query->where('role', 'user'))
-                            ->default(fn () => Auth::user()->hasRole('admin') ? null : Auth::id())
-                            ->disabled(fn() => !Auth::user()->hasRole('admin'))
-                            ->required(),
-                    Select::make('item_id')
-                            ->options(Item::pluck('name', 'id'))
-                            ->required()
-                            // ->relationship('items', 'name')
-                            // ->reactive()
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(fn($set, ?string $state) =>
-                                $set('amount', Item::find($state)?->price_per_day ?? 0)),
-                    DatePicker::make('payment_date')
-                            ->required()
-                            ->nullable(),
-                    DatePicker::make('start_rent')
-                            ->required()
-                            // ->reactive()
-                            ->afterStateUpdated(fn ($set, $get) =>
-                                self::calculateAmount($set, $get)),
-                    DatePicker::make('end_rent')
-                            ->required()
-                            // ->reactive()
-                            ->afterStateUpdated(fn ($set, $get) =>
-                                self::calculateAmount($set, $get)),
-                    TextInput::make('amount')
-                            ->required()
-                            ->numeric()
-                            ->disabled(),
+                // Select::make('user_id')
+                //         ->option(User::pluck('name', 'id'))
+                //         // ->relationship ('user','name',fn (Builder $query) => $query->where('role', 'user'))
+                //         ->default(fn () => Auth::user()->hasRole('admin') ? null : Auth::id())
+                //         ->disabled(fn() => !Auth::user()->hasRole('admin'))
+                //         ->required(),
+                // Select::make('item_id')
+                //         ->options(Item::pluck('name', 'id'))
+                //         ->required()
+                //         // ->relationship('items', 'name')
+                //         // ->reactive()
+                //         ->live(onBlur: true)
+                //         ->afterStateUpdated(fn($set, ?string $state) =>
+                //             $set('amount', Item::find($state)?->price_per_day ?? 0)),
+                // DatePicker::make('payment_date')
+                //         ->required()
+                //         ->nullable(),
+                // DatePicker::make('start_rent')
+                //         ->required()
+                //         // ->reactive()
+                //         ->afterStateUpdated(fn ($set, $get) =>
+                //             self::calculateAmount($set, $get)),
+                // DatePicker::make('end_rent')
+                //         ->required()
+                //         // ->reactive()
+                //         ->afterStateUpdated(fn ($set, $get) =>
+                //             self::calculateAmount($set, $get)),
+                // TextInput::make('amount')
+                //         ->required()
+                //         ->numeric()
+                //         ->disabled(),
 
             ]);
     }
+
 
     private static function calculateAmount($set, $get)
     {
@@ -89,13 +90,27 @@ class RentalResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('user_id'),
-                TextColumn::make('item_id'),
-                TextColumn::make('start_rent'),
-                TextColumn::make('end_rent'),
+                TextColumn::make('user.name')
+                    ->searchable()
+                    ->label('Customer'),
+                TextColumn::make('item.name')
+                    ->searchable()
+                    ->label('Item'),
+                TextColumn::make('start_rent')
+                    ->date(),
+                TextColumn::make('end_rent')
+                    ->date(),
                 TextColumn::make('amount')
                     ->money('IDR'),
-                TextColumn::make('payment_date'),
+                TextColumn::make('payment_date')
+                    ->date(),
+                TextColumn::make('status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'approved' => 'success',
+                        'rejected' => 'danger',
+                        'pending' => 'warning',
+                    }),
             ])
             ->filters([
                 //
