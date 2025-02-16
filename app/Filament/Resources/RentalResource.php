@@ -16,6 +16,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -114,6 +115,7 @@ class RentalResource extends Resource
                         'rejected' => 'danger',
                         'pending' => 'warning',
                     }),
+                ImageColumn::make('ktp_image'),
             ])
             ->filters([
                 //

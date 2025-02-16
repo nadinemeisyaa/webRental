@@ -7,7 +7,7 @@ use Filament\Forms\Components\Component;
 use Livewire\WithPagination;
 use Filament\Actions;
 use Illuminate\Contracts\View\View;
-
+use Livewire\WithFileUploads;
 use Filament\Resources\Pages\ListRecords;
 
 class ListItems extends ListRecords
@@ -23,10 +23,10 @@ class ListItems extends ListRecords
     // }
     protected static string $resource = ItemResource::class;
 
-    // protected function getHeaderActions(): array
-    // {
-    //     return [
-    //         Actions\CreateAction::make(),
-    //     ];
-    // }
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\CreateAction::make(),
+        ];
+    }
 }

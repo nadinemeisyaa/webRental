@@ -60,6 +60,29 @@
                                 wire:model="amount" readonly>
                         </div>
 
+                        <!-- Foto KTP Upload -->
+                        <div>
+                            <label for="ktp_image" class="block text-sm font-medium text-gray-800">
+                                Upload Foto KTP
+                            </label>
+                            <input type="file" id="ktp_image" name="ktp_image"
+                                class="mt-1 block w-full px-3 py-2 border border-gray-400 rounded-md shadow-sm bg-white text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                wire:model="ktp_image" accept="image/*">
+
+                            @error('ktp_image')        <span class="text-sm text-red-600">{{ $message }}</span>
+                            @enderror
+
+                            <!-- Preview Foto KTP -->
+                            @if ($ktp_image)
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-700">Preview:</p>
+                                    <img src="{{ $ktp_image->temporaryUrl() }}" alt="Preview KTP"
+                                        class="mt-1 w-32 h-20 object-cover rounded-md border">
+                                </div>
+                            @endif
+                        </div>
+
+
                         <!-- Submit Button -->
                         <div>
                             <button type="submit"

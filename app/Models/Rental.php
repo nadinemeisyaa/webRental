@@ -9,7 +9,7 @@ class Rental extends Model
 {
     protected $guarded = ['id'];
 
-    protected $fillable = ['user_id', 'item_id', 'payment_date', 'start_rent', 'end_rent', 'quantity', 'amount', ];
+    
 
     protected $casts = [
         'payment_date' => 'date',
