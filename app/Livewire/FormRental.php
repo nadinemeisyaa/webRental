@@ -11,7 +11,7 @@ use Livewire\Component;
 
 class FormRental extends Component
 {
-    public $item;
+    public $item = null;
     public $start_rent;
     public $end_rent;
     public $amount;
@@ -20,9 +20,10 @@ class FormRental extends Component
     {
         $user = auth()->user();
         $paymentDate = Carbon::now()->format('Y-m-d');
-        $startRent = $this->start_rent;
-        $endRent = $this->end_rent;
+        $startRent = Carbon::parse($this->start_rent);
+        $endRent = Carbon::parse($this->end_rent);
         $amount = $this->amount;
+        $totalDays = Carbon::parse($this->start_rent)->diffInDays(Carbon::parse($this->end_rent));
 
         $rental = Rental::create([
             'user_id' => $user->id,
@@ -33,15 +34,18 @@ class FormRental extends Component
             'amount' => $amount,
         ]);
 
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . env('FONNTE_TOKEN')
-        ])->post('https://api.fonnte.com/send', [
-                    'target' => $user->phone_number,
-                    'message' => 'Pembayaran sewa barang berhasil dilakukan',
-                    'countryCode' => '62',
-                ]);
+        $phoneNumber = '081944582397';
+        $message = "Halo, saya ingin mengkonfirmasi penyewaan multimedia dengan detail berikut:\n\n"
+        . "Nama: " . $user->name . "\n"
+        . "Item: " . $rental->item->name . "\n"
+        . "Mulai: " . $startRent->format('d M Y H:i') . "\n"
+        . "Selesai: " . $endRent->format('d M Y H:i') . "\n"
+        . "Total Hari: " . $totalDays . "\n"
+        . "Total Biaya: Rp " . number_format($amount, 0, ',', '.') . "\n";
 
-        return redirect()->route('home');
+        $whatsAppApi = "https://wa.me/".$phoneNumber."?text=".urlencode($message);
+
+        return redirect()->away($whatsAppApi);
     }
 
     public function mount()
@@ -51,7 +55,7 @@ class FormRental extends Component
 
     public function render()
     {
-        $items = Item::all();
+        $items = Item::where('status', 0)->get();
         return view('livewire.form-rental', [
             'items' => $items
         ]);

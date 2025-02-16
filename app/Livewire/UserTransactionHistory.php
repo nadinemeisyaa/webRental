@@ -7,17 +7,13 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Rental;
 
 
-// class UserTransactionHistory extends Component
-// {
-//     public $rentals;
-
-//     public function mount()
-//     {
-//         $this->rentals = Rental::where('user_id', Auth::id())->latest()->get();
-//     }
-
-//     public function render()
-//     {
-//         return view('livewire.user-transaction-history');
-//     }
-// }
+class UserTransactionHistory extends Component
+{
+    public function render()
+    {
+        $histories = Rental::where('user_id', auth()->user()->id)->get();
+        return view('livewire.user-transaction-history', [
+            'histories' => $histories
+        ]);
+    }
+}

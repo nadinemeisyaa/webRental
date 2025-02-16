@@ -23,7 +23,7 @@ new class extends Component
             <!-- Logo -->
             <div class="m-4 items-center">
                 <a href="{{ route('home') }}" wire:navigate>
-                    <h1 class="text-base font-bold">Bintang Multimedia</h1>
+                    <h1 class="text-base font-bold text-green-600">Bintang Multimedia</h1>
                 </a>
             </div>
 
@@ -45,17 +45,17 @@ new class extends Component
                     {{ __('About') }}
                 </x-nav-link>
 
-                <x-nav-link :href="route('transaction.history')" :active="request()->routeIs('transaction.history')">
+                <x-nav-link :href="route('history')" :active="request()->routeIs('history')">
                     {{ __('History Transaksi') }}
                 </x-nav-link>
             </div>
             <!-- Settings Dropdown -->
             @guest
              <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-4">
-                <a href="{{ route('login') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md">
+                <a href="{{ route('login') }}" class="bg-green-500 text-white px-4 py-2 rounded-md">
                     Login
                 </a>
-                <a href="{{ route('register') }}" class="border border-blue-500 text-blue-500 px-4 py-2 rounded-md">
+                <a href="{{ route('register') }}" class="border border-green-500 text-green-500 px-4 py-2 rounded-md">
                     Register
                 </a>
             </div>
@@ -105,7 +105,7 @@ new class extends Component
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')" wire:navigate>
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>

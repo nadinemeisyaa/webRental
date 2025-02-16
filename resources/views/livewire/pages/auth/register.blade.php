@@ -26,7 +26,7 @@ new #[Layout('layouts.guest')] class extends Component
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'phone_number' => ['required', 'string', 'max:255', 'unique:'.User::class],
-            'address' => ['required', 'string', 'lowercase', 'max:255'], // Fixed: Removed concatenation with User::class
+            'address' => ['required', 'string', 'max:255'], 
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 

@@ -1,11 +1,10 @@
 <?php
 
+use App\Livewire\FormRental;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\UserTransactionHistory;
 
-Route::view('/', 'welcome');
-
-Route::view('profile', 'profile')
+Route::view('profile', 'livewire.update-profile-information-form')
     ->middleware(['auth'])
     ->name('profile');
 
@@ -15,17 +14,7 @@ Route::get('/', \App\Livewire\Home::class)
     ->name('home');
 Route::get('/about', \App\Livewire\About::class)
     ->name('about');
-Route::get('/sewa', \App\Livewire\FormRental::class)
-    ->middleware(['auth'])
-    ->name('sewa');
-// Route::get('/transaction/history', \App\Livewire\UserTransactionHistory::class)
-//     ->name('transaction.history');
-
-    // @livewire('user-transaction-history');
-
 Route::middleware(['auth'])->group(function () {
-    Route::get('/history', function () {
-        return view('user.history');
-    })->name('user.history');
+    Route::get('/history', UserTransactionHistory::class)->name('history');
+    Route::get('/sewa', FormRental::class)->name('sewa');
 });
-// });
