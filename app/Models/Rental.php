@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Rental extends Model
@@ -25,5 +26,17 @@ class Rental extends Model
 
     public function item(){
         return $this->belongsTo(Item::class, 'item_id');
+    }
+
+    public function getDurationAttribute()
+    {
+        if ($this->start_rent && $this->end_rent) {
+            $startDate = Carbon::parse($this->start_rent);
+            $endDate = Carbon::parse($this->end_rent);
+
+            return max($startDate->diffInDays($endDate), 1); // Minimal 1 hari
+        }
+
+        return 0;
     }
 }
